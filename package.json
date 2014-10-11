@@ -1,0 +1,36 @@
+{
+  "name": "node-zapper",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.8.2",
+    "lodash": "~2.4.1",
+    "grunt": "~0.4.5",
+    "moment": "~2.8.1",
+    "mongoose": "~3.8.14",
+    "async": "~0.9.0",
+    "chance": "~0.5.9",
+    "ejs": "~1.0.0",
+    "request": "~2.40.0",
+    "yaml-config": "~0.3.0",
+    "forever": "~0.11.1",
+    "debug": "~1.0.4"
+  },
+  "devDependencies": {
+    "grunt-contrib-sass": "~0.7.4",
+    "grunt-html2js": "~0.2.8",
+    "grunt-concurrent": "~0.5.0",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-uglify": "~0.5.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "chai": "~1.9.1",
+    "mocha": "~1.21.4"
+  }
+}
