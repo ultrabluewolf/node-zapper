@@ -1,0 +1,16 @@
+default:
+  app:
+    port: 3000
+  mongo:
+    port: 27017
+    host: '127.0.0.1'
+
+test:
+  mongo:
+    port: 27017
+    host: '127.0.0.1'
+
+prod:
+  mongo:
+    port: 27017
+    host: '127.0.0.1'
