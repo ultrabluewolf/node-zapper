@@ -1,3 +1,4 @@
+var debug = require('debug')('zapper:mapping:controller');
 
 var fs = require('fs');
 var ld = require('lodash');
@@ -14,15 +15,16 @@ var MappingUtils = require('../../src/models').Mapping.utils;
 
 
 module.exports.set = function(app) {
-  // put more app route listings here
   
 
   app.get('/mapping', function (req, res) {
 
     Mapping.find().exec(function (err, mappings) {
-      if (err) throw err;
-
-      console.log(mappings);
+      if (err) {
+        debug(err);
+        res.status(500).json({success:false});
+        return;
+      }
 
       var data = {
         success: true,
@@ -34,22 +36,12 @@ module.exports.set = function(app) {
 
     });
 
-    // fs.readFile('./tmp/mapping.json', 'utf-8', function (err, data) {
-
-    //   if (err) throw err;
-    //   console.log(data);
-    //   data = JSON.parse(data);
-    //   res.setHeader('Content-Type', 'application/json');
-    //   res.send(JSON.stringify(data,null,"  "));
-
-    // });
 
   });
 
 
   app.post('/mapping', function (req, res, next) {
-    console.log("=>",req.body);
-
+    
     var data = req.body;
 
     var query = {};
@@ -60,14 +52,16 @@ module.exports.set = function(app) {
       query.name = data.name;
     }
 
-    console.log('query:',query);
-
+    
     Mapping.findOne(query).exec(function (err,mapping) {
 
-      if (err) console.log(err);
+      if (err) {
+        debug(err);
+        res.status(500).json({success:false});
+        return;
+      }
 
       if (mapping) {
-        console.log('copying');
         MappingUtils.copy(mapping,data);
       } else {
         mapping = MappingUtils.init(data);
@@ -83,30 +77,20 @@ module.exports.set = function(app) {
 
     });
 
-    //var mapping = MappingUtils.init(data);
-    
-
-    //data.mappings = JSON.stringify(data.mappings,null,' ');
-
-    // fs.writeFile('./tmp/mapping/' + data.name + '.json', data.mappings, function (err) {
-    //   if (err) throw err;
-
-    //   res.setHeader('Content-Type', 'application/json');
-    //   res.send(JSON.stringify({success: true, test: req.body},null,'  '));
-    // });
 
   });
 
 
 
   app.get('/mapping/:name', function (req, res, next) {
-    console.log(req.params.name);
-
+    
     Mapping.findOne({name: req.params.name}).exec(function (err,mapping) {
 
-      if (err) throw err;
-      console.log(data);
-      //data = JSON.parse(data);
+      if (err) {
+        debug(err);
+        res.status(500).json({success:false});
+        return;
+      }
       
       if (!mapping) {
         mapping = {};
@@ -122,15 +106,6 @@ module.exports.set = function(app) {
 
     });
 
-    // fs.readFile('./tmp/mapping/' + req.params.id + '.json', 'utf-8', function (err, data) {
-
-    //   if (err) throw err;
-    //   console.log(data);
-    //   data = JSON.parse(data);
-    //   res.setHeader('Content-Type', 'application/json');
-    //   res.send(JSON.stringify(data,null,"  "));
-
-    // });
 
   });
 
@@ -141,7 +116,11 @@ module.exports.set = function(app) {
     
     Mapping.findOne({name: req.params.name}).exec(function (err,mapping) {
 
-      if (err) throw err;
+      if (err) {
+        debug(err);
+        res.status(500).json({success:false});
+        return;
+      }
 
       var result = {
         success: true,
@@ -155,25 +134,6 @@ module.exports.set = function(app) {
 
     });
 
-
-    // fs.readFile('./tmp/mapping/' + req.params.id + '.json', 'utf-8', function (err, mappings) {
-
-    //   if (err) throw err;
-    //   //console.log(mappings);
-    //   mappings = JSON.parse(mappings);
-
-    //   var result = {
-    //     value: mappings[data.value]
-    //   };
-
-    //   if (result.value) {
-    //     result.success = true;
-    //   } 
-
-    //   res.setHeader('Content-Type', 'application/json');
-    //   res.send(JSON.stringify(result,null,"  "));
-
-    // });
 
   });
 

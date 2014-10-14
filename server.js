@@ -1,23 +1,26 @@
+var debug = require('debug')('zapper');
 
-var bodyParser = require('body-parser');
-var express = require('express');
-var app = express();
+var bodyParser = require('body-parser'),
+  express = require('express'),
+  app = express();
+
+var config = require('yaml-config'),
+  settings = config.readConfig('./config/settings.yaml');
 
 var controllers = require('./src/controllers');
 
+
 // setup
-var PORT = 3000;
+var PORT = settings.app.port;
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use( bodyParser.urlencoded({extended:true}) ); // to support URL-encoded bodies
-
-// app.use(express.json());       // to support JSON-encoded bodies
-// app.use(express.urlencoded()); // to support URL-encoded bodies
 
 
 
 controllers.set(app);
 
 
+console.log("server started on port:",PORT);
 
 app.listen(PORT);

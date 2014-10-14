@@ -1,3 +1,5 @@
+var debug = require('debug')('zapper:mapping:model');
+
 var ld = require('lodash');
 var mongoose = require('mongoose');
 
